@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Approval System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="1" x2="12" y2="23"></line>
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+                <span>CreditFlow</span>
+            </div>
+            <nav class="tabs">
+                <button class="tab active" data-target="register-section">Register Customer</button>
+                <button class="tab" data-target="eligibility-section">Check Eligibility</button>
+            </nav>
+        </header>
+
+        <!-- Main Content area -->
+        <main class="main-content">
+
+            <!-- Register Section -->
+            <section id="register-section" class="card active-section">
+                <div class="card-header">
+                    <h2>Register New Customer</h2>
+                    <p>Enter customer details to instantly calculate their approved credit limit.</p>
+                </div>
+                
+                <form id="register-form" class="form-grid">
+                    <div class="input-group">
+                        <label for="reg-first-name">First Name</label>
+                        <input type="text" id="reg-first-name" required placeholder="Jane">
+                    </div>
+                    <div class="input-group">
+                        <label for="reg-last-name">Last Name</label>
+                        <input type="text" id="reg-last-name" required placeholder="Doe">
+                    </div>
+                    <div class="input-group">
+                        <label for="reg-age">Age</label>
+                        <input type="number" id="reg-age" required placeholder="28">
+                    </div>
+                    <div class="input-group">
+                        <label for="reg-phone">Phone Number</label>
+                        <input type="number" id="reg-phone" required placeholder="9876543210">
+                    </div>
+                    <div class="input-group full-width">
+                        <label for="reg-income">Monthly Income (₹)</label>
+                        <input type="number" id="reg-income" required placeholder="50000">
+                    </div>
+                    <div class="input-group full-width submit-group">
+                        <button type="submit" class="primary-btn submit-btn">
+                            <span class="btn-text">Register Customer</span>
+                            <div class="loader hidden"></div>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Result Area for Register -->
+                <div id="register-result" class="result-area hidden">
+                    <div class="success-banner">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        <div class="banner-text">
+                            <h3>Registration Successful</h3>
+                            <p>Customer ID: <strong id="res-cust-id"></strong></p>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card prime">
+                            <h4>Approved Credit Limit</h4>
+                            <div class="stat-value">₹ <span id="res-limit">0</span></div>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Monthly Income</h4>
+                            <div class="stat-value">₹ <span id="res-income">0</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- Check Eligibility Section -->
+            <section id="eligibility-section" class="card">
+                <div class="card-header">
+                    <h2>Check Loan Eligibility</h2>
+                    <p>Test the credit score algorithm and view simulated EMI calculations.</p>
+                </div>
+                
+                <form id="eligibility-form" class="form-grid">
+                    <div class="input-group">
+                        <label for="el-customer-id">Customer ID</label>
+                        <input type="number" id="el-customer-id" required placeholder="1">
+                    </div>
+                    <div class="input-group">
+                        <label for="el-amount">Requested Loan Amount (₹)</label>
+                        <input type="number" id="el-amount" required placeholder="200000">
+                    </div>
+                    <div class="input-group">
+                        <label for="el-rate">Interest Rate (%)</label>
+                        <input type="number" id="el-rate" step="0.1" required placeholder="10.5">
+                    </div>
+                    <div class="input-group">
+                        <label for="el-tenure">Tenure (Months)</label>
+                        <input type="number" id="el-tenure" required placeholder="24">
+                    </div>
+                    
+                    <div class="input-group full-width text-center">
+                        <p class="hint-text">If eligible, the system will apply Slab Correction rules to the interest rate.</p>
+                    </div>
+
+                    <div class="input-group full-width submit-group">
+                        <button type="submit" class="primary-btn submit-btn">
+                            <span class="btn-text">Calculate Eligibility</span>
+                            <div class="loader hidden"></div>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Result Area for Eligibility -->
+                <div id="eligibility-result" class="result-area hidden">
+                    
+                    <div id="el-decision-banner" class="status-banner">
+                        <div class="banner-icon-container">
+                            <svg id="el-icon-approved" class="hidden" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                            <svg id="el-icon-rejected" class="hidden" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                        </div>
+                        <div class="banner-text">
+                            <h3 id="el-approval-text">Decision</h3>
+                            <p id="el-subtext">Calculating based on past history...</p>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid three-col">
+                        <div class="stat-card">
+                            <h4>Monthly Installment (EMI)</h4>
+                            <div class="stat-value">₹ <span id="el-res-emi">0</span></div>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Requested Rate</h4>
+                            <div class="stat-value"><span id="el-res-req-rate">0</span>%</div>
+                        </div>
+                        <div class="stat-card highlight-card">
+                            <h4>Corrected Rate</h4>
+                            <div class="stat-value"><span id="el-res-cor-rate">0</span>%</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
